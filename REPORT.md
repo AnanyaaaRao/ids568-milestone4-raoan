@@ -47,17 +47,17 @@ python pipeline.py --input data/ --output output_dist/ --mode distributed --work
 
 | Metric | Local (`local[1]`) | Distributed (`local[4]`) |
 |---|---|---|
-| Total Runtime | ___ seconds | ___ seconds |
-| Shuffle Read | ___ MB | ___ MB |
-| Shuffle Write | ___ MB | ___ MB |
-| Peak Memory Spilled | ___ MB | ___ MB |
-| Driver Heap Used | ___ MB | ___ MB |
+| Total Runtime | 262.35 seconds | 163.45 seconds |
+| Shuffle Read | 0.0 MB | 0.0 MB |
+| Shuffle Write | 0.0 MB | 0.0 MB |
+| Peak Memory Spilled | 0.0 MB| 0.0 MB |
+| Driver Heap Used | 1882.2 MB | 2621.4 MB |
 | Shuffle Partitions | 4 | 16 |
 | Worker Utilization | 100% (1 thread) | ~75–90% (4 threads) |
 | Rows Processed | 10,000,000 | 10,000,000 |
-| User Feature Rows | ___ | ___ |
-| Product Feature Rows | ___ | ___ |
-| Category Feature Rows | ___ | ___ |
+| User Feature Rows | 100,000 | 100,000|
+| Product Feature Rows | 50,000 | 50,000 |
+| Category Feature Rows | 6 | 6 |
 
 **Expected speedup:** On a 4-core laptop, `local[4]` typically gives a
 **1.5–2.5× speedup** over `local[1]` for this workload. The speedup is
@@ -76,15 +76,15 @@ each worker has independent network and memory.
 > Replace `___` placeholders below with actual values after running benchmarks.
 
 ```
-Local  (1 thread):  [████████████████████████████████████] ___s
-Dist.  (4 threads): [████████████████████] ___s
-Speedup: ___×
+Local  (1 thread):  [████████████████████████████████████] 262.35s
+Dist.  (4 threads): [████████████████████] 163.45s
+Speedup: 1.60×
 ```
 
 Shuffle volume comparison (distributed mode only):
 ```
-Shuffle Read:  [█████] ___ MB
-Shuffle Write: [████] ___ MB
+Shuffle Read:  [█████] 0.0 MB
+Shuffle Write: [████] 0.0 MB
 ```
 
 ---
