@@ -1,7 +1,0 @@
-Mode: local
-Workers: 1
-Rows processed: 10000000
-Total runtime seconds: 107.62
-Peak memory MB: 1754.67
-Shuffle read MB: N/A
-Shuffle write MB: N/A

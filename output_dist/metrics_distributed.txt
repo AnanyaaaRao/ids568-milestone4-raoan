@@ -1,7 +1,0 @@
-Mode: distributed
-Workers: 4
-Rows processed: 10000000
-Total runtime seconds: 107.93
-Peak memory MB: 1754.67
-Shuffle read MB: N/A
-Shuffle write MB: N/A
