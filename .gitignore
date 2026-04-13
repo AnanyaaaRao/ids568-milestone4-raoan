@@ -1,0 +1,47 @@
+# ── Generated data & pipeline outputs ────────────────────────────────────────
+# These are produced by running the pipeline and can be 100s of MB.
+# DO NOT commit them.
+data/
+test_data/
+run1_data/
+run2_data/
+run1_out/
+run2_out/
+output/
+output_local/
+output_dist/
+test_output/
+results/
+queue/
+
+# ── Streaming event/result files ──────────────────────────────────────────────
+*.jsonl
+events.jsonl
+streaming_results.jsonl
+load_test_results.json
+output_hashes.json
+checkpoint.txt
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.eggs/
+dist/
+build/
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ── Spark temp files ──────────────────────────────────────────────────────────
+derby.log
+metastore_db/
+spark-warehouse/
+
+# ── OS / IDE ──────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
