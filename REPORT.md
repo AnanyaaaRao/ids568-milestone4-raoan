@@ -275,3 +275,82 @@ Partition tuning improved performance up to the optimal partition count. Beyond 
 ![Streaming Latency by Load](charts/streaming_latency.png)
 
 Streaming latency increased with load. The p99 latency rose the fastest at higher message rates, showing the effect of backpressure under stress.
+
+
+## Distributed Execution Analysis
+
+The distributed execution was performed using a PySpark-based pipeline that
+partitioned the dataset across multiple workers. Parallel transformations
+allowed aggregation and feature engineering steps to execute concurrently.
+
+During execution, the main workload was distributed across multiple tasks
+based on the configured partition count. Increasing worker count reduced
+runtime significantly compared to the local baseline, demonstrating the
+benefit of horizontal scaling for larger datasets.
+
+However, improvements began to plateau at higher worker counts due to
+coordination overhead and shuffle costs between executors. This highlights
+the trade-off between parallelism and scheduling overhead in distributed
+systems.
+
+## Crossover Point Analysis
+
+Distributed execution introduces overhead due to task scheduling,
+cluster coordination, and data shuffling. For very small datasets,
+this overhead can outweigh the benefits of parallel processing.
+
+In our experiments, the distributed pipeline began outperforming
+the local execution once the dataset size and transformation
+complexity increased. With multiple workers processing partitions
+in parallel, the distributed pipeline achieved significantly lower
+runtime compared to the single-machine baseline.
+
+This demonstrates the crossover point where distributed execution
+becomes beneficial. For workloads involving large datasets and
+aggregation-heavy transformations, horizontal scaling provides
+clear performance advantages.
+
+## Reliability Considerations
+
+Distributed systems provide improved fault tolerance compared to
+single-machine pipelines. In Spark-based pipelines, transformations
+are represented as a lineage graph. If a worker fails during
+execution, Spark can recompute the lost partitions using this
+lineage information.
+
+In addition, intermediate data may spill to disk if memory
+pressure becomes high. While this slightly increases runtime,
+it prevents job failure due to memory exhaustion.
+
+These reliability features make distributed frameworks suitable
+for production workloads where long-running data processing jobs
+must tolerate partial failures.
+
+## Cost Implications of Scaling
+
+Increasing the number of workers reduces total runtime but also
+increases compute resource usage. In cloud environments, this
+directly translates to higher infrastructure cost.
+
+Our experiments show diminishing returns as worker count increases.
+While the runtime improved significantly when scaling from one
+worker to several workers, additional workers provided smaller
+performance gains due to coordination overhead and shuffle costs.
+
+Therefore, an optimal cluster configuration balances performance
+improvement with infrastructure cost.
+
+## Production Deployment Recommendations
+
+For production deployments, the distributed pipeline should be
+configured with a partition count aligned with the cluster size
+to maximize parallelism without excessive scheduling overhead.
+
+Monitoring tools such as Spark UI or cluster metrics should be
+used to track executor utilization, memory usage, and shuffle
+activity. These metrics help identify bottlenecks and guide
+capacity planning for large-scale workloads.
+
+In practice, organizations often combine distributed batch
+pipelines with streaming ingestion systems to support both
+historical processing and real-time analytics.
