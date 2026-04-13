@@ -253,3 +253,25 @@ that blocks the developer's machine.
 5. **Enable speculative execution** in multi-node clusters to guard against hardware stragglers.
 6. **Use checkpointing** for long iterative pipelines — breaks unbounded lineage chains that degrade planner performance.
 7. **Profile before optimising** — measure actual shuffle bytes and spill before changing partition counts.
+
+## Performance Visualizations
+
+### 1. Local vs Distributed Runtime
+![Local vs Distributed Runtime](charts/runtime_comparison.png)
+
+The distributed pipeline reduced total runtime compared to the local baseline, showing the benefit of parallel execution on larger datasets.
+
+### 2. Runtime vs Worker Count
+![Runtime vs Worker Count](charts/runtime_vs_workers.png)
+
+Runtime improved as worker count increased, though the improvement became smaller at higher worker counts, indicating diminishing returns from additional parallelism.
+
+### 3. Runtime vs Partition Count
+![Runtime vs Partition Count](charts/runtime_vs_partitions.png)
+
+Partition tuning improved performance up to the optimal partition count. Beyond that point, scheduling and coordination overhead began to offset the gains.
+
+### 4. Streaming Latency by Load
+![Streaming Latency by Load](charts/streaming_latency.png)
+
+Streaming latency increased with load. The p99 latency rose the fastest at higher message rates, showing the effect of backpressure under stress.
